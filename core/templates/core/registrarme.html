@@ -5,110 +5,261 @@
 {% block content %}
 
 
-  <br><br>
+<br><br>
 
-  <h1>Registrarme</h1>
+<h1>Registrarme</h1>
 
-  <br><br>
-
-  <form id="form" method="POST" enctype="multipart/form-data" style='display: none'>
-    {{ form|as_bootstrap_form }}
-      {% csrf_token %}
+<br><br>
 
 
-      <div class="row">
+<form id="form" method="POST" enctype="multipart/form-data">
 
-    <!-- DATOS BASICOS-->
-          <div class="col-sm-12 col-md-6">
-              
-              
-                  <div class="col-sm-12 col-md-6">
-                      <input type="file" id="fileElem" multiple accept="image/*" style="display:none" />
-                      
-                          <a href="#" id="fileSelect">
-                              <button type="submit" class="btn btn-primary">
-                                  Selecciona un archivo.
-                              </button>
-                          </a>
-                      
-                      
-                  </div>
-              
-              <div id="fileList">
-                  <p>Sin archivo seleccionado!</p>
-              </div>
+    {% csrf_token %}
+    
+    <div class="container-fluid">
+            
+    <!-- Datos del formulario -->
+    <div class="row">
+        <!-- Cajas de texto -->
+        <div class="col-sm-12 col-md-6">
+            
+            <!-- Rut -->
+            <div class="mb-3">
+                <label for="rut" class="form-label">
+                    RUT
+                </label>
+                
+                
+                <input required type="text" class="form-control" id="rut"
+                    placeholder="Ej: 12123123-K"
+                    aria-describedby="rutHelp">
+                <div id="rutHelp" class="form-text">
+                    Escriba su RUT sin puntos y con guión.
+                </div>
+                <div class="invalid-feedback">
+                    El RUT es un campo obligatorio.
+                </div>
+            </div>
 
-          </div>
-          
-    <!-- DATOS DEL PERFIL->
-      
-      <!-- Botones -->
-      <div class="row">
-          <div class="col">
+            <!-- Nombres -->
+            <div class="mb-3">
+                <label for="nombres" class="form-label">
+                    NOMBRES
+                </label>
+                <input required type="text" class="form-control" id="nombres" name="nombres"
+                    placeholder="Ej: Juan Alberto"
+                    aria-describedby="nombresHelp">
+                <div id="nombresHelp" class="form-text">
+                    Escriba sus dos nombres.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Nombres es obligatorio.
+                </div>
+            </div>
 
-              <button type="submit" class="btn btn-primary">
-                  Guardar
-              </button>
+            <!-- Apellidos -->
+            <div class="mb-3">
+                <label for="apellidos" class="form-label">
+                    APELLIDOS
+                </label>
+                <input required type="text" class="form-control" id="apellidos" name="apellidos"
+                    placeholder="Ej: Dominguez Salfate"
+                    aria-describedby="apellidosHelp">
+                <div id="apellidosHelp" class="form-text">
+                    Escriba sus dos nombres.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Apellidos es obligatorio.
+                </div>
+            </div>
 
-              <button type="reset" class="btn btn-primary">
-                  Limpiar
-              </button>
+            <!-- Correo -->
+            <div class="mb-3">
+                <label for="correo" class="form-label">
+                    CORREO
+                </label>
+                <input required type="email" class="form-control" id="correo" name="correo"
+                    placeholder="Ej: juan@gmail.com"
+                    aria-describedby="correosHelp">
+                <div id="correosHelp" class="form-text">
+                    Escriba su correo electrónico.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Correo es obligatorio.
+                </div>
+            </div>
 
-          </div>
-          
-      </div>
+            <!-- Dirección -->
+            <div class="mb-3">
+                <label for="direccion" class="form-label">
+                    DIRECCIÓN
+                </label>
+                <textarea required class="form-control" id="direccion" rows="4"
+                    placeholder="Ej: San Pedro 666, Los Angeles."
+                    aria-describedby="direccionHelp"></textarea>
+                <div id="direccionHelp" class="form-text">
+                    Escriba su direccion.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Dirección es obligatorio.
+                </div>
+            </div>
+
+            <!-- Checkbox Suscripcion -->
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="suscripcion">
+                <label class="form-check-label" for="suscripcion">
+                    Deseo subscribirme con un aporte de $30.000 mensuales y obtener un 5% de descuento en mis compras.
+                </label>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    CONTRASEÑA
+                </label>
+                <input required type="password" class="form-control" id="password" name="password"
+                    placeholder="Escriba aquí su contraseña"
+                    aria-describedby="passwordHelp">
+                <div id="passwordHelp" class="form-text">
+                    Debe tener 1 número, 1 símbolo, letras mayúsculas, letras minúsculas y mínimo 8 caractéres.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Contraseña es obligatorio.
+                </div>
+            </div>
+
+            <!-- Repetir contraseña -->
+            <div class="mb-3">
+                <label for="password2" class="form-label">
+                    CONTRASEÑA
+                </label>
+                <input required type="password" class="form-control" id="password2" name="password2"
+                    placeholder="Confirme su contraseña"
+                    aria-describedby="password2Help">
+                <div id="password2Help" class="form-text">
+                    Ingrese aquí la contraseña anteriormente ingresada.
+                </div>
+                <div class="invalid-feedback">
+                    El campo Repetir Contraseña es obligatorio y debe ser igual a la contraseña anterior.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fotos de perfil  -->
+        <!-- <div class="col-sm-12 col-md-6">
+            <img height="300px" src="img/succ.jpg" alt="">
+            <br><br>
+            <input type="file" name="foto" id="foto">
+        </div> -->
+        
+
+        <div class="col-sm-12 col-md-6">
+            
+            
+                <div class="col-sm-12 col-md-6">
+                    <input type="file" id="fileElem" multiple accept="image/*" style="display:none" />
+                    
+                        <a href="#" id="fileSelect">
+                            <button type="submit" class="btn btn-primary">
+                                Selecciona un archivo.
+                            </button>
+                        </a>
+                    
+                    
+                </div>
+            
+
+            <div id="fileList">
+                <p>Sin archivo seleccionado!</p>
+            </div>
+
+        </div>
+        
+        
     </div>
-          
+
+    <!-- 
+        Usando hipervínculo:
+
+        <a href="link" class="btn btn-primary">
+            Guardar
+        </a>
+    -->
+    <!-- 
+        <input type="submit"> Sirve para enviar los datos del formulario hacia un servidor.
+        <input type="reset"> Limpiar lo ingresado en los campos.
+        -->
+    
+    <!-- Botones -->
+    <div class="row">
+        <div class="col">
+
+
+            <button type="submit" class="btn btn-primary">
+                Guardar
+            </button>
+
+            <button type="reset" class="btn btn-primary">
+                Limpiar
+            </button>
+
+        </div>
+        
+    </div>
+
+
     </div>
 
     {% comment %} <div class="row">
 
-      <!-- AREA DE DATOS BASICOS: username, nombre, apellidos, correo y contraseñas -->
-      <div class="col-sm-12 col-md-4">
+    <!-- AREA DE DATOS BASICOS: username, nombre, apellidos, correo y contraseñas -->
+    <div class="col-sm-12 col-md-4">
 
         form_usuario|as_bootstrap_form:'help_text_visible=False'
 
-      </div>
+    </div>
 
-      <!-- AREA DE DATOS DE PERFIL: rut, dirección y subscrito (VER COMENTARIO "CHECKBOX SUBSCRITO" en script.js)  -->
-      <div class="col-sm-12 col-md-5">
+    <!-- AREA DE DATOS DE PERFIL: rut, dirección y subscrito (VER COMENTARIO "CHECKBOX SUBSCRITO" en script.js)  -->
+    <div class="col-sm-12 col-md-5">
 
         form_perfil|as_bootstrap_form
 
-      </div>
+    </div>
 
-      <!-- AREA DE IMAGEN DE PERFIL -->
-      <div class="col-sm-12 col-md-3 text-center">
+    <!-- AREA DE IMAGEN DE PERFIL -->
+    <div class="col-sm-12 col-md-3 text-center">
         <div class="row">
-          <!-- AREA DE CUADRO DE IMAGEN: Muestra la Imagen de perfil -->
-          <div class="col-sm-12" style="height: 220px">
+        <!-- AREA DE CUADRO DE IMAGEN: Muestra la Imagen de perfil -->
+        <div class="col-sm-12" style="height: 220px">
             <img id="cuadro-imagen" src="{% static 'core/img/sin-imagen.png' %}">
-          </div>
         </div>
-      </div>
+        </div>
+    </div>
 
     </div>
 
     <!-- AREA DE BOTONES -->
     <div class="mt-2 mb-3 text-center">
-      
-      <button type="submit"> Registrarme </button>
-      
-      <!-- Boton para "Limpiar formulario" (VER COMENTARIO "BOTON LIMPIAR FORMULARIO" en script.js) -->
-      <button type="reset" id="limpiar_formulario"> Limpiar </button>
-      
-      <!-- AREA DE BOTON DE SELECCIONAR IMAGEN: Reemplaza el botón "Seleccionar archivo" por otro con Bootstrap (VER COMENTARIO "BOTON IMAGEN" en script.js) -->
-      <button onclick="event.preventDefault(); document.getElementById('id_imagen').click();"> Seleccionar imagen </button>  
-      
-      <!-- Botón para "Crear usuario de prueba" (VER COMENTARIO "CREAR USUARIO DE PRUEBA" en registrarme.js) -->
-      <button id="crear_usuario_prueba"> Crear usuario de prueba </button>
+    
+    <button type="submit"> Registrarme </button>
+    
+    <!-- Boton para "Limpiar formulario" (VER COMENTARIO "BOTON LIMPIAR FORMULARIO" en script.js) -->
+    <button type="reset" id="limpiar_formulario"> Limpiar </button>
+    
+    <!-- AREA DE BOTON DE SELECCIONAR IMAGEN: Reemplaza el botón "Seleccionar archivo" por otro con Bootstrap (VER COMENTARIO "BOTON IMAGEN" en script.js) -->
+    <button onclick="event.preventDefault(); document.getElementById('id_imagen').click();"> Seleccionar imagen </button>  
+    
+    <!-- Botón para "Crear usuario de prueba" (VER COMENTARIO "CREAR USUARIO DE PRUEBA" en registrarme.js) -->
+    <button id="crear_usuario_prueba"> Crear usuario de prueba </button>
 
     </div> {% endcomment %}
 
-  </form>
-  
+</form>
+
 {% endblock content %}
 
 {% block script %}
-  <script src="{% static 'core/js/registrarme.js' %}"></script>
+<script src="{% static 'core/js/registrarme.js' %}"></script>
 {% endblock script %}
