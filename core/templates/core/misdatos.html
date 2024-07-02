@@ -5,19 +5,16 @@
 {% block content %}
     
   <form id="form" method="POST" enctype="multipart/form-data">
-
-    {% csrf_token %}
-
-    <div class="instrucciones-para-el-alumno">
-      INSTRUCCIONES PARA EL ALUMNO (ELIMINALO DESPUES DE LEERLO):<br>
-      - Esta página es igual que la de "registrarme". <br>
+    <div class="row d-flex justify-content-center">
+      {{ form|as_bootstrap_form }}
+      {% csrf_token %}
     </div>
 
     <!-- AREA DE BOTONES -->
     <div class="mt-2 text-center">
 
       <button type="submit"> Actualizar mis datos </button>
-
+      
       <!-- AREA DE BOTON DE SELECCIONAR IMAGEN: Reemplaza el botón "Seleccionar archivo" por otro con Bootstrap (VER COMENTARIO "BOTON IMAGEN" en script.js) -->
       <button onclick="event.preventDefault(); document.getElementById('id_imagen').click();"> Seleccionar imagen </button>  
 

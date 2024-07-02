@@ -11,10 +11,12 @@ from django.utils.safestring import SafeString
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Boleta, Carrito, DetalleBoleta, Bodega, Perfil
 from .forms import ProductoForm, BodegaForm, IngresarForm, UsuarioForm, PerfilForm
-from .forms import RegistroUsuarioForm, RegistroPerfilForm
+from .forms import RegistroUsuarioForm, RegistroPerfilForm, ProductoForm
 from .templatetags.custom_filters import formatear_dinero, formatear_numero
 from .tools import eliminar_registro, verificar_eliminar_registro, show_form_errors
 from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import redirect
 
 # *********************************************************************************************************#
 #                                                                                                          #
@@ -120,20 +122,34 @@ def registrarme(request):
     if request.method == 'POST':
         
         # CREAR: usar RegistroUsuarioForm para obtener datos del formulario
+
+        form_usuario = RegistroUsuarioForm(request.POST)
+        form_perfil = RegistroPerfilForm(request.POST, request.FILES)
+
+        if form_usuario.is_valid() and form_perfil.is_valid():
+            usuario = form_usuario.save(commit=False)
+            usuario.is_staff = False
+            perfil = form_perfil.save(commit=False)
+            usuario.save()
+            perfil.usuario_id = usuario.id
+            perfil.tipo_usuario = 'Cliente'
+            perfil.save()
         # CREAR: usar RegistroPerfilForm para obtener datos del formulario
         # CREAR: lógica para crear usuario
-        pass
+
     
     if request.method == 'GET':
 
         # CREAR: un formulario RegistroUsuarioForm vacío
+        form_usuario = RegistroUsuarioForm()
+        form_perfil = RegistroPerfilForm()
         # CREAR: un formulario RegistroPerfilForm vacío
-        pass
+
 
     # CREAR: variable de contexto para enviar formulario de usuario y perfil
-    context = { }
+    context = { 'form_usuario' = form_usuario, 'form_perfil' = form_perfil}
 
-    return render(request, 'core/registrarme.html', context)
+    return render(request, 'core/registrarme.html',{ 'form' : form})
 
 @login_required
 def misdatos(request):
@@ -152,9 +168,9 @@ def misdatos(request):
         pass
     
     # CREAR: variable de contexto para enviar formulario de usuario y perfil
-    context = { }
+    form = RegistroUsuarioForm
 
-    return render(request, 'core/misdatos.html', context)
+    return render(request, 'core/misdatos.html', { 'form' : form})
 
 @login_required
 def boleta(request, nro_boleta):
@@ -181,18 +197,32 @@ def productos(request, accion, id):
     
     if request.method == 'POST':
         
-        # CREAR: lógica para crear y actualizar un producto
-        pass
-
+        if request.method == 'crear':
+            form = ProductoForm(request.POST, request.FILES)
+        
+        if request.method == 'actualizar':
+            form = ProductoForm(request.POST, request.FILES, instance=Producto.objects.get(id=id))
+        if form.is_valid():
+            producto = form.save()
+            ProductoForm(instance=producto)
+            messages.success(request, f'El producto "{str(producto)}" se logró {accion} correctamente')
+            return redirect(productos, 'actualizar',producto.id)
+        else:
+            messages.error(request, 'El producto no se pudo guardar correctamente')
     if request.method == 'GET':
+        if accion == 'crear':
+            form = ProductoForm()
+        elif accion == 'actualizar':
+            form = ProductoForm(instance=Producto.objects.get(id=id))
+        elif accion == 'eliminar':
+            Producto.objects.get(id=id).delete()
+            messages.success(request, 'El producto fue eliminado correctamente')
+            return redirect(productos, 'crear','0')
+    
+    form = ProductoForm
+    lista = Producto.objects.all()
 
-        # CREAR: lógica para preparar la página para la acción de: crear, actualizar y eliminar un producto
-        pass
-
-    # CREAR: variable de contexto para enviar el formulario y todos los productos
-    context = { }
-
-    return render(request, 'core/productos.html', context)
+    return render(request, 'core/productos.html', { 'form' : form, 'productos' : lista } )
 
 @user_passes_test(es_personal_autenticado_y_activo)
 def usuarios(request, accion, id):
@@ -217,9 +247,9 @@ def usuarios(request, accion, id):
             pass
 
     # CREAR: variable de contexto para enviar el formulario de usuario, formulario de perfil y todos los usuarios
-    context = { }
+    form = RegistroUsuarioForm
 
-    return render(request, 'core/usuarios.html', context)
+    return render(request, 'core/usuarios.html', { 'form' : form})
 
 @user_passes_test(es_personal_autenticado_y_activo)
 def bodega(request):
