@@ -64,6 +64,7 @@ $(document).ready(function() {
                 range: [0, 100],
                 sumaDescuentos: true,
             },
+            
         },
         messages: {
             'categoria': {

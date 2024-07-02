@@ -3,20 +3,27 @@
 {% load custom_filters %}
 
 {% block content %}
+    <br><br>
 
-  <form id="form" method="POST" enctype="multipart/form-data">
+    <h1>Mantenedor de Productos</h1>
 
-    {% csrf_token %}
+    <br><br>
 
 
-    form.categoria|as_bootstrap_field <br>
+  <form id="form" method="POST" enctype="multipart/form-data"> 
+    <div class="row d-flex justify-content-center">
+      {{ form|as_bootstrap_form }}
+      {% csrf_token %}
+    </div>
+    <!-- form.categoria|as_bootstrap_field <br>
     form.nombre|as_bootstrap_field <br>
     form.descripcion|as_bootstrap_field <br>
 
     form.precio|as_bootstrap_field <br>
     form.descuento_subscriptor|as_bootstrap_field  <br>
-    form.descuento_oferta|as_bootstrap_field  <br>
-
+    form.descuento_oferta|as_bootstrap_field  <br>   -->
+    
+    <!-- foto-->
     {% if form.imagen.value %}
       <img id="cuadro-imagen" src="/media/{{ form.imagen.value }}">
     {% else %}
@@ -24,22 +31,16 @@
     {% endif %}
     
     {{ form.imagen|as_bootstrap_field }}
-
-
     <!-- AREA DE BOTONES -->
     <div class="mt-2 mb-3 text-center">
-
       <input class="btn btn-primary" type="submit" value="Guardar">
+      <a class="btn btn-primary" type="submit" href="{% url 'productos' 'crear' '0' %}"> Nuevo </a>
+      <a class="btn btn-primary" type="reset" href="{% url 'productos' 'eliminar' '1' %}"> Eliminar </a>
 
-      <a class="btn btn-primary" href="{% url 'productos' 'crear' '0' %}"> Nuevo </a>
-
-      <!-- AREA DE BOTON DE SELECCIONAR IMAGEN: Reemplaza el botón "Seleccionar archivo" por otro con Bootstrap (VER COMENTARIO "BOTON IMAGEN" en script.js) -->
     <button class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('id_imagen').click();"> Seleccionar imagen </button>  
-
       {% if form.instance.id %}
         <a class="btn btn-primary"  href="{% url 'productos' 'eliminar' form.instance.id %}"> Eliminar </a>
       {% endif %}
-
     </div>
 
   </form>
@@ -50,36 +51,31 @@
   
   {% endcomment %}
 
-  <div class="instrucciones-para-el-alumno">
-    INSTRUCCIONES PARA EL ALUMNO (ELIMINALO DESPUES DE LEERLO):<br>
-    - Construye tu tabla de productos, pero puedes usar los campos sugeridos. <br>
-  </div>
-  
     <table id="tabla-principal" class="table table-hover">
         <thead>
             <tr>
-                <th> ID </th>
-                <th> Categoría </th>
-                <th> Nombre </th>
-                <th> Descripción </th>
-                <th> Precio </th>
-                <th> %Subs </th>
-                <th> %Oferta </th>
-                <th> Imagen </th>
-                <th> Editar </th>
-                <th> Eliminar </th>
+                <th scope="col"> ID </th>
+                <th scope="col"> Categoría </th>
+                <th scope="col"> Nombre </th>
+                <th scope="col"> Descripción </th>
+                <th scope="col"> Precio </th>
+                <th scope="col"> %Subs </th>
+                <th scope="col"> %Oferta </th>
+                <th scope="col">  Imagen </th>
+                <th scope="col"> Editar </th>
+                <th scope="col"> Eliminar </th>
             </tr>
         </thead>
         <tbody>
             {% for producto in productos %}
                 
-              producto.id
-              producto.categoria
-              producto.nombre
-              producto.descripcion
-              producto.precio|formatear_dinero
-              producto.descuento_subscriptor|formatear_porcentaje
-              producto.descuento_oferta|formatear_porcentaje
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.categoria }}</td>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.descripcion }}</td>
+            <td>{{ producto.precio|formatear_dinero }} </td>
+            <td>{{ producto.descuento_subscriptor|formatear_porcentaje }}</td>
+            <td>{{ producto.descuento_oferta|formatear_porcentaje }}</td>
               <td>
                   <img src="/media/{{ producto.imagen }}" class="producto-sm" alt="">
               </td>
