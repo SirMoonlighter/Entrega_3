@@ -85,6 +85,7 @@ def ingresar(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
+                    print(request.POST)
                     messages.success(request, f'¡Bienvenido(a) {user.first_name} {user.last_name}!')
                     return redirect(inicio)
                 else:
