@@ -5,16 +5,14 @@
 {% block content %}
     
   <form id="form" method="POST" enctype="multipart/form-data">
-  
-    {% csrf_token %}
-
-    <div class="instrucciones-para-el-alumno">
-      INSTRUCCIONES PARA EL ALUMNO (ELIMINALO DESPUES DE LEERLO):<br>
-      - Construye tu tabla de usuarios, pero puedes usar los campos sugeridos. <br>
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+          {{ form_usuario|as_bootstrap_form }}
+          {{ form_perfil|as_bootstrap_form }}
+          {% csrf_token %}
+        </div>
     </div>
 
-    form_usuario|as_bootstrap_form <br>
-    form_perfil|as_bootstrap_form <br>
 
     <!-- AREA DE CUADRO DE IMAGEN: Imagen de perfil (VER COMENTARIO "CUADRO DE IMAGEN" en script.js) -->
     {% if form_perfil.imagen.value %}
@@ -67,32 +65,30 @@
       </thead>
       <tbody>
         {% for usuario in usuarios %}
-          
-
-          usuario.id </br>
-          usuario.username </br>
-          usuario.perfil.tipo_usuario </br>
-          usuario.first_name </br>
-          usuario.last_name </br>
-          usuario.email </br>
-          usuario.perfil.rut </br>
-          
-            <td> {% if usuario.perfil.subscrito %} Sí {% else %} No {% endif %} </td>
-            <td>
-              <img src="/media/{{ usuario.perfil.imagen }}" class="usuario-sm" alt="">
-            </td>
-            <td>
-              <div class="btn-group">
-                <a href="{% url 'usuarios' 'actualizar' usuario.id %}" class="btn btn-primary btn-sm"> Editar </a>
-                <a href="{% url 'usuarios' 'eliminar' usuario.id %}" class="btn btn-danger btn-sm"> Eliminar </a>
-                <form action="{% url 'cambiar_password' %}" method="post" id="form_{{ usuario.username }}">
-                  {% csrf_token %}
-                  <input type="hidden" id="username" name="username" value="{{ usuario.username }}">
-                  <button class="btn btn-info btn-sm" id="id_generar_password" onclick="document.getElementById('form_{{ usuario.username }}').submit();"> Contraseña </button>
-                </form>
-              </div>
-            </td>
-          </tr>
+          <td>{ usuario.id  } </td>
+          <td>{{usuario.username}} </td>
+          <td>{{usuario.perfil.tipo_usuario}} </td>
+          <td>{{usuario.first_name}} </td>
+          <td>{{usuario.last_name}} </td>
+          <td>{{usuario.email}} </td>
+          <td>{{usuario.perfil.rut}} </td>
+            
+              <td> {% if usuario.perfil.subscrito %} Sí {% else %} No {% endif %} </td>
+              <td>
+                <img src="/media/{{ usuario.perfil.imagen }}" class="usuario-sm" alt="">
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a href="{% url 'usuarios' 'actualizar' usuario.id %}" class="btn btn-primary btn-sm"> Editar </a>
+                  <a href="{% url 'usuarios' 'eliminar' usuario.id %}" class="btn btn-danger btn-sm"> Eliminar </a>
+                  <form action="{% url 'cambiar_password' %}" method="post" id="form_{{ usuario.username }}">
+                    {% csrf_token %}
+                    <input type="hidden" id="username" name="username" value="{{ usuario.username }}">
+                    <button class="btn btn-info btn-sm" id="id_generar_password" onclick="document.getElementById('form_{{ usuario.username }}').submit();"> Contraseña </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
         {% endfor %}
       </tbody>
     </table>
