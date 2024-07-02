@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+
+
+    <br><br>
+
+    <h1>Ficha de producto</h1>
+
+    <br><br>
+
+    <form method="post" id="formulario-ficha">
+
+        {% csrf_token %}
+
+        {% comment %} <div>
+        {{ imagen }} <br>
+        {{ nombre }} <br>
+        {{ html_estado|safe }}  <br>
+        {{ html_precio|safe }}  <br>
+        {{ descripcion }}  <br>
+        {{ html_stock|safe }}  <br>
+        </div>
+        
+        <div>
+            <input type="hidden" id="accion">
+            <a href="{% url 'comprar_ahora' %}" class="btn btn-primary ancho-160px"> 
+                Comprar ahora 
+            </a>
+            <a href="{% url 'agregar_producto_al_carrito' id %}" class="btn btn-secondary ancho-160px"> 
+                Agregar al carrito 
+            </a>
+        </div> {% endcomment %}
+
+        <div class="container">
+            <div class="row">
+    
+                <!-- Recuadro imagen de juego -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="container">
+                        <img src="/media/{{ imagen }}" height="490px" width="85%">
+                    </div>
+                </div>
+                    
+                <!-- Dummy text -->
+                <div class="col-sm-6 col-md-6">
+                    <div class="card" style="width: 60rem auto;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 30px; font-weight: bold;"> {{ nombre }} </h5>
+                            <br>
+                            <p class="card-text">
+                              <p style="font-weight: bolder"> {{ html_estado|safe }} </p>
+                              <p style="font-weight: bold">Precio: $8.000</p>
+                              <p style="font-weight: bold"> {{ html_precio|safe }} </p>
+                              <br>
+                              <p> {{ descripcion }} </p>
+                              {% comment %} <br>
+                              Categoría: TRPG
+                              <br> {% endcomment %}
+                              
+                              <br>
+                              <p style="font-weight: bold"> {{ html_stock|safe }} </p>
+                            </p>
+                          </div>
+                    </div>
+    
+                    <br>
+ 
+                </div>
+
+                <br>
+                
+                <div class= "container text-center">
+                    <input type="hidden" id="accion">
+                    <a href="{% url 'comprar_ahora' %}" class="btn btn-primary ancho-160px"> 
+                        Comprar ahora 
+                    </a>
+                    <a href="{% url 'agregar_producto_al_carrito' id %}" class="btn btn-secondary ancho-160px"> 
+                        Agregar al carrito 
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+{% endblock content %}
+
+{% block script %}
+    <script src="{% static 'core/js/ficha.js' %}"></script>
+{% endblock script %}

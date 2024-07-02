@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+  
+<br><br>
+
+<h1>Nosotros</h1>
+
+<br><br>
+
+<p class="container text-center" style="font-size: 20px; color: darkblue; font-weight: bold; opacity: 60%;">
+  Bienvenidos a The Game's On!, tu destino final para todo lo
+  relacionado con videojuegos. Desde los últimos lanzamientos hasta
+  accesorios imprescindibles, nuestra selección está pensada para satisfacer
+  a gamers de todos los estilos. Nuestra misión: ofrecer calidad, variedad y
+  el mejor servicio al cliente. ¡Explora, descubre y lleva tu pasión por los
+  videojuegos al próximo nivel con nosotros!
+</p>
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col p-4 col-sm-12 col-md-6 col-lg-4 col-xl-3 mx-auto">
+      <div class="card" style="width: 18rem">
+        <img src="{% static "core/img/empresario.png" %}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">Gerente General<br> Bastián Cabezas</h5>
+          <p class="card-text">
+            Más de 10 años liderando equipos en el sector del entretenimiento digital. <br>
+            Ingeniero de Software con especialización en Inteligencia Artificial.
+          </p>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="col p-4 col-sm-12 col-md-6 col-lg-4 col-xl-3 mx-auto">
+      <div class="card" style="width: 18rem">
+        <img src="{% static "core/img/empresaria.png" %}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">Gerente General <br> Camila Jopia</h5>
+          <p class="card-text">
+            Experta en marketing digital y e-commerce con una trayectoria destacada en startups tecnológicas. <br>
+            Licenciada en Administración de Empresas, Máster en Marketing Digital.
+          </p>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="col p-4 col-sm-12 col-md-6 col-lg-4 col-xl-3 mx-auto">
+      <div class="card" style="width: 18rem">
+        <img src="{% static "core/img/empresario.png" %}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">Gerente General <br> Nicolás Estay</h5>
+          <p class="card-text">
+            Amplia experiencia en desarrollo de negocio y expansión de mercados internacionales en la industria de videojuegos. <br>
+            Economista con MBA en Negocios Internacionales.
+          </p>
+          
+        </div>
+      </div>
+    </div>
+    
+{% endblock content %}

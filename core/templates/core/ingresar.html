@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+  
+    <br><br>
+
+    <h1>Ingresar</h1>
+    
+    <br><br>
+
+  <div class="row justify-content-center">
+    
+    <form id="form" method="POST" class="col-5 border border-3 p-4">
+
+      {% csrf_token %} 
+      
+      <!-- Botones -->
+       
+      {% comment %} {{ form|as_bootstrap_form }} {% endcomment %}
+
+      <div class="cuadro_login mx-auto">
+
+        <div class="mb-3 row">
+            <label for="username" class="col-sm-4 col-form-label">Cuenta</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="username" id="id_username">
+              </div>
+        </div>
+  
+        <div class="mb-3 row">
+            <label for="password" class="col-sm-4 col-form-label">Contraseña</label>
+              <div class="col-sm-8">
+                <input type="password" class="form-control" name="password" id="id_password">
+              </div>
+        </div>
+  
+        {% comment %} <div class="mb-3 row">
+          <button type="button" class="btn btn-primary boton_ingresar">Ingresar</button>
+        </div> {% endcomment %}
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary boton_ingresar"> Ingresar </button>
+        </div>
+
+        <br>
+  
+        <p class="container text-center" style="font-size: large; font-weight: 500;">¿Eres un usuario nuevo?</p>
+  
+        <div class="mb-3 row">
+
+          <a href="{% url 'registrarme' %}" class="btn btn-success boton_ingresar">
+            Registrarme
+          </a>
+
+        </div>
+        
+      </div>
+  
+      
+      
+      
+    </form>
+  </div>
+
+  <!-- Combobox de usuarios (QUITAR EN VERSION DE PRODUCCION DEL SOFTWARE) -->
+  <!-- NO LO BORRES PARA QUE PUEDAS HACER TUS PRUEBAS MAS RAPIDAMENTE  -->
+  {% include 'common/combobox_usuarios.html' %}
+  
+{% endblock content %}
+
+{% block script %}
+  <script src="{% static 'core/js/ingresar.js' %}"></script>
+{% endblock script %}
